@@ -1,20 +1,18 @@
 import { useState } from 'react';
-import Link from 'next/link';
 
 const TaskForm = ({ addTask }) => {
-  const [taskName, setTaskName] = useState("");
+  const [taskName, setTaskName] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (taskName.trim()) {
       addTask(taskName);
-      setTaskName("");
+      setTaskName('');
     }
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <Link href="/completed">View Completed Tasks</Link>
       <input
         type="text"
         placeholder="Add new task"

@@ -1,8 +1,6 @@
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
-import styles from '../../styles/Home.module.css';
+import { useEffect, useState } from 'react';
 
-export default function Completed() {
+export default function CompletedTasks() {
   const [completedTasks, setCompletedTasks] = useState([]);
 
   useEffect(() => {
@@ -13,14 +11,13 @@ export default function Completed() {
   }, []);
 
   return (
-    <div className={styles.container}>
+    <div>
       <h1>Completed Tasks</h1>
       <ul>
         {completedTasks.map(task => (
           <li key={task.id}>{task.name}</li>
         ))}
       </ul>
-      <Link href="/">Back to To-Do List</Link>
     </div>
   );
 }

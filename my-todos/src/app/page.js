@@ -1,7 +1,9 @@
+// src/app/page.js
+"use client";
 import { useState } from 'react';
-import TaskForm from '../components/TaskForm';
-import TaskList from '../components/TaskList';
-import styles from '../styles/Home.module.css';
+import TaskList from './components/TaskList';
+import TaskForm from './components/TaskForm';
+import styles from './styles/Home.module.css';
 
 export default function Home() {
   const [tasks, setTasks] = useState([]);
@@ -16,7 +18,9 @@ export default function Home() {
   };
 
   const completeTask = (taskId) => {
-    setTasks(tasks.map(task => task.id === taskId ? { ...task, isComplete: true } : task));
+    setTasks(
+      tasks.map(task => task.id === taskId ? { ...task, isComplete: true } : task)
+    );
   };
 
   return (
