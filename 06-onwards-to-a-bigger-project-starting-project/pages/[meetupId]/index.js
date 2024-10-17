@@ -1,6 +1,7 @@
 // pages/[meetupId]/index.js
 import { MongoClient, ObjectId } from 'mongodb';
-import MeetupDetail from "../../components/meetups/meetupDetail";
+import MeetupDetail from "../../components/meetups/MeetupDetail";
+
 import { Fragment } from 'react';
 import Head from 'next/head';
 
