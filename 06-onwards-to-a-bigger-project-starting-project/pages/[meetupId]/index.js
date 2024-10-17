@@ -1,4 +1,5 @@
 // pages/[meetupId]/index.js
+import { MongoClient, ObjectId } from 'mongodb';
 import MeetupDetail from "../../components/meetups/meetupDetail";
 
 function MeetupDetails(props) {
@@ -13,31 +14,41 @@ function MeetupDetails(props) {
 }
 
 export async function getStaticPaths() {
+  const client = await MongoClient.connect('mongodb+srv://chaitanyaumbarkar34:TJzdBoJfGOPCdVj7@cluster0.gfnzr.mongodb.net/<DATABASE_NAME>?retryWrites=true&w=majority');
+  const db = client.db();
+  const meetupsCollection = db.collection('meetups');
+  const meetups = await meetupsCollection.find({}, {_id: 1}).toArray();
+
+  client.close();
+
   return {
     fallback: false,
-    paths: [
-      { params: { meetupId: "m1" } },
-      { params: { meetupId: "m2" } },
-    ],
+    paths: meetups.map((meetup) => ({
+      params: { meetupId: meetup._id.toString()}
+    }))
   };
 }
 
 export async function getStaticProps(context) {
   const meetupId = context.params.meetupId;
 
-  // Log to the terminal, useful for debugging during build
-  console.log(meetupId);
+  const client = await MongoClient.connect('mongodb+srv://chaitanyaumbarkar34:TJzdBoJfGOPCdVj7@cluster0.gfnzr.mongodb.net/<DATABASE_NAME>?retryWrites=true&w=majority');
+  const db = client.db();
+  const meetupsCollection = db.collection('meetups');
+  const selectedMeetup = await meetupsCollection.findOne({_id: new ObjectId(meetupId)});
+
+  client.close();
 
   // Fetch or get your meetup data based on meetupId
   return {
     props: {
       meetupData: {
-        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/View_of_Santa_Maria_del_Fiore_in_Florence.jpg/480px-View_of_Santa_Maria_del_Fiore_in_Florence.jpg",
-        id: meetupId,
-        title: `Meetup ${meetupId}`,
-        address: "sant colony, 173, street side",
-        description: "This is a description of the meetup.",
-      },
+        id: selectedMeetup._id.toString(),
+        title: selectedMeetup.title,
+        address: selectedMeetup.address,
+        description: selectedMeetup.description,
+        image: selectedMeetup.image
+      }
     },
   };
 }
