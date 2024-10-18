@@ -19,10 +19,12 @@ export default async function handler(req, res) {
     const newTask = req.body;
     const result = await tasksCollection.insertOne(newTask);
     res.status(201).json(result.ops[0]);
-  } else {
-    res.setHeader('Allow', ['GET', 'POST']);
-    res.status(405).end(`Method ${req.method} Not Allowed`);
   }
+  
+  // else {
+  //   res.setHeader('Allow', ['GET', 'POST']);
+  //   res.status(405).end(`Method ${req.method} Not Allowed`);
+  // }
 
   client.close();
 }
