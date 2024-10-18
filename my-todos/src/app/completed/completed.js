@@ -11,6 +11,7 @@ export default function CompletedTasks() {
   }, []);
 
   return (
+    // completed tasks shown here
     <div>
       <h1>Completed Tasks</h1>
       <ul>
