@@ -7,6 +7,7 @@ const TaskList = ({ tasks, deleteTask, completeTask }) => {
             {task.name}
           </span>
           <button onClick={() => completeTask(task.id)}>Complete</button>
+          {/* delete the task */}
           <button onClick={() => deleteTask(task.id)}>Delete</button>
         </li>
       ))}
